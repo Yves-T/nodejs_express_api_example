@@ -6,14 +6,34 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 // database
-var mongo = require('mongoskin');
-var db = mongo.db('mongodb://localhost:27017/nodetest2', {native_parser: true});
+var mongoose = require('mongoose');
+
+var Schema = '';
+var userSchema = '';
+var User = '';
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection.error:'));
+db.once('open', function () {
+    // Create your schemas and models here.
+    Schema = mongoose.Schema;
+    userSchema = new Schema({
+        username: String,
+        email: String,
+        fullname: String,
+        age: Number,
+        location: String,
+        gender: String
+
+    });
+    User = mongoose.model('User', userSchema, 'userlist');
+});
+mongoose.connect('mongodb://localhost:27017/nodetest2');
 
 var app = express();
 
 // make our db accessible to our router
 app.use(function (req, res, next) {
-    req.db = db;
+    req.User = User;
     next();
 });
 
