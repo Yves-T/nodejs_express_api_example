@@ -10,22 +10,19 @@ var mongoose = require('mongoose');
 
 var Schema = '';
 var userSchema = '';
-var User = '';
+var Product = '';
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection.error:'));
 db.once('open', function () {
     // Create your schemas and models here.
     Schema = mongoose.Schema;
-    userSchema = new Schema({
-        username: String,
-        email: String,
-        fullname: String,
-        age: Number,
-        location: String,
-        gender: String
-
+    productSchema = new Schema({
+        name: String,
+        description: String,
+        category: String,
+        price: Number
     });
-    User = mongoose.model('User', userSchema, 'userlist');
+    Product = mongoose.model('Product', productSchema, 'productList');
 });
 mongoose.connect('mongodb://localhost:27017/nodetest2');
 
@@ -33,12 +30,12 @@ var app = express();
 
 // make our db accessible to our router
 app.use(function (req, res, next) {
-    req.User = User;
+    req.Product = Product;
     next();
 });
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var products = require('./routes/products');
 
 
 // view engine setup
@@ -54,7 +51,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/products', products);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
