@@ -6,8 +6,8 @@ Make sure you have installed mongo and node js
 
 Open a terminal and install the following
 
-npm update -g express
-npm update -g generator-express
+* npm update -g express
+* npm update -g generator-express
 
 Clone the project from git. Change the directory to nodetest2 where package.json is and enter the following in the terminal
 * npm install
@@ -21,7 +21,7 @@ ulimit -n 2048  & mongod --dbpath ~/IdeaProjects/nodetest2/nodetest2/data
 * In the mongo shell type *use nodetest2*
 * To insert the data type the following copy the command in the mongo.js
 
-##Set up intellij
+##Set up Intellij
 
 Right MB click in app.js and create a run configuration. Edit this run configuration and point
 the javascript file input field to bin/www
